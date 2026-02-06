@@ -1,0 +1,82 @@
+<div id="modal-login" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Iniciar Sesión</h3>
+                <button class="btn-close" id="modal-login-close">×</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Usuario</label>
+                    <input 
+                        type="text" 
+                        id="login-username" 
+                        name="username" 
+                        required 
+                        minlength="3"
+                        placeholder="Ingresa tu usuario"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="login-password" 
+                        name="password" 
+                        required 
+                        minlength="6"
+                        placeholder="Ingresa tu contraseña"
+                    >
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-login-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                </div>
+                
+                <div id="login-error" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal: Register -->
+    <div id="modal-register" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Cuenta</h3>
+                <button class="btn-close" id="modal-register-close">×</button>
+            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Usuario</label>
+                    <input 
+                        type="text" 
+                        id="register-username" 
+                        name="username" 
+                        required 
+                        minlength="3"
+                        placeholder="Elige un usuario (mín. 3 caracteres)"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="register-password" 
+                        name="password" 
+                        required 
+                        minlength="6"
+                        placeholder="Elige una contraseña (mín. 6 caracteres)"
+                    >
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-register-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+                </div>
+                
+                <div id="register-error" class="error-message"></div>
+            </form>
+        </div>
+    </div>

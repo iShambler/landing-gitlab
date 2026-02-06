@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Horas</title>
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="header-left">
+                <h2>📅 Gestión de Horas</h2>
+                <span id="username-display-header" style="margin-left: 20px; display: none;">
+                    👤 Usuario: <span id="username-display"></span>
+                </span>
+            </div>
+            <div class="header-right">
+                <!-- Botones cuando NO está logueado -->
+                <div id="auth-buttons" style="display: flex; gap: 10px;">
+                    <button id="btn-show-login" class="btn btn-primary">Iniciar Sesión</button>
+                    <button id="btn-show-register" class="btn btn-secondary">Registrarse</button>
+                </div>
+                
+                <!-- Botones cuando SÍ está logueado -->
+                <div id="user-buttons" style="display: none; gap: 10px;">
+                    <button id="btn-logout" class="btn btn-secondary">Cerrar Sesión</button>
+                </div>
+            </div>
+        </header>
+        
+        <!-- Main Content -->
+        <div class="main-content">
+            <!-- Sidebar: Calendar -->
+            <aside class="sidebar">
+                <div class="calendar-container">
+                    <div class="calendar-header">
+                        <button id="btn-prev-month" class="btn-icon">←</button>
+                        <h3 id="calendar-title">Febrero 2026</h3>
+                        <button id="btn-next-month" class="btn-icon">→</button>
+                    </div>
+                    <div class="calendar-weekdays">
+                        <div>L</div>
+                        <div>M</div>
+                        <div>X</div>
+                        <div>J</div>
+                        <div>V</div>
+                        <div>S</div>
+                        <div>D</div>
+                    </div>
+                    <div id="calendar-grid" class="calendar-grid">
+                        <!-- Días generados dinámicamente -->
+                    </div>
+                </div>
+            </aside>
+            
+            <!-- Main Area: Weekly Table -->
+            <main class="content-area">
+                <div class="week-header">
+                    <div style="display: flex; align-items: center; gap: 10px;">
+                        <button id="btn-prev-week" class="btn-icon">←</button>
+                        <h2 id="week-title">Semana del 3 al 9 de Febrero 2026</h2>
+                        <button id="btn-next-week" class="btn-icon">→</button>
+                    </div>
+                    <div style="display: none; gap: 10px;" id="project-buttons">
+                        <button id="btn-list-projects" class="btn btn-secondary" style="width: auto;">LISTAR PROYECTOS</button>
+                        <button id="btn-create-project" class="btn btn-primary" style="width: auto;">CREAR PROYECTO</button>
+                    </div>
+                </div>
+                
+                <!-- Weekly Table -->
+                <div class="table-container">
+                    <table class="weekly-table">
+                        <thead>
+                            <tr>
+                                <th class="col-project">PROYECTO</th>
+                                <th class="col-day">L</th>
+                                <th class="col-day">M</th>
+                                <th class="col-day">X</th>
+                                <th class="col-day">J</th>
+                                <th class="col-day">V</th>
+                                <th class="col-day disabled">S</th>
+                                <th class="col-day disabled">D</th>
+                                <th class="col-total">Total</th>
+                            </tr>
+                            <tr>
+                                <th></th>
+                                <th class="date-label" id="date-l">-</th>
+                                <th class="date-label" id="date-m">-</th>
+                                <th class="date-label" id="date-x">-</th>
+                                <th class="date-label" id="date-j">-</th>
+                                <th class="date-label" id="date-v">-</th>
+                                <th class="date-label disabled">-</th>
+                                <th class="date-label disabled">-</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody id="table-body">
+                            <!-- Filas generadas dinámicamente -->
+                        </tbody>
+                        <tfoot>
+                            <tr class="total-row">
+                                <td><strong>TOTAL</strong></td>
+                                <td id="total-l">0h</td>
+                                <td id="total-m">0h</td>
+                                <td id="total-x">0h</td>
+                                <td id="total-j">0h</td>
+                                <td id="total-v">0h</td>
+                                <td class="disabled">-</td>
+                                <td class="disabled">-</td>
+                                <td id="total-week">0h</td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                    
+                    <!-- Empty State cuando no está logueado -->
+                    <div id="empty-state-guest" class="empty-state" style="display: block;">
+                        <p>👋 Bienvenido a Gestión de Horas</p>
+                        <p class="empty-state-hint">Inicia sesión o regístrate para comenzar a imputar horas</p>
+                    </div>
+                    
+                    <!-- Empty State cuando está logueado sin proyectos -->
+                    <div id="empty-state" class="empty-state" style="display: none;">
+                        <p>📋 No tienes proyectos creados</p>
+                        <p class="empty-state-hint">Haz clic en "CREAR PROYECTO" para comenzar</p>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+    
+    <!-- Modal: Login -->
+    <div id="modal-login" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Iniciar Sesión</h3>
+                <button class="btn-close" id="modal-login-close">×</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Usuario</label>
+                    <input 
+                        type="text" 
+                        id="login-username" 
+                        name="username" 
+                        required 
+                        minlength="3"
+                        placeholder="Ingresa tu usuario"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="login-password" 
+                        name="password" 
+                        required 
+                        minlength="6"
+                        placeholder="Ingresa tu contraseña"
+                    >
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-login-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                </div>
+                
+                <div id="login-error" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal: Register -->
+    <div id="modal-register" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Cuenta</h3>
+                <button class="btn-close" id="modal-register-close">×</button>
+            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Usuario</label>
+                    <input 
+                        type="text" 
+                        id="register-username" 
+                        name="username" 
+                        required 
+                        minlength="3"
+                        placeholder="Elige un usuario (mín. 3 caracteres)"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="register-password" 
+                        name="password" 
+                        required 
+                        minlength="6"
+                        placeholder="Elige una contraseña (mín. 6 caracteres)"
+                    >
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-register-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+                </div>
+                
+                <div id="register-error" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal: Create Project -->
+    <div id="modal-create-project" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Proyecto</h3>
+                <button class="btn-close" id="modal-close">×</button>
+            </div>
+            <form id="form-create-project">
+                <div class="form-group">
+                    <label for="project-name">Nombre del Proyecto</label>
+                    <input 
+                        type="text" 
+                        id="project-name" 
+                        required 
+                        maxlength="100"
+                        placeholder="Ej: Desarrollo, Reuniones, Formación"
+                    >
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+                <div id="modal-error" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal: List Projects -->
+    <div id="modal-list-projects" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Mis Proyectos</h3>
+                <button class="btn-close" id="modal-list-close">×</button>
+            </div>
+            <div id="projects-list-container">
+                <!-- Lista de proyectos generada dinámicamente -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal: Edit Project -->
+    <div id="modal-edit-project" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Editar Proyecto</h3>
+                <button class="btn-close" id="modal-edit-close">×</button>
+            </div>
+            <form id="form-edit-project">
+                <input type="hidden" id="edit-project-id">
+                <div class="form-group">
+                    <label for="edit-project-name">Nombre del Proyecto</label>
+                    <input 
+                        type="text" 
+                        id="edit-project-name" 
+                        required 
+                        maxlength="100"
+                        placeholder="Nuevo nombre del proyecto"
+                    >
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-edit-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+                <div id="modal-edit-error" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Scripts -->
+    <script src="js/websocket.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/table.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>

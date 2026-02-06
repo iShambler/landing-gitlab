@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arebot - Imputa tus horas hablando | Arelance</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="icon" href="assets/arelance-icono.png" type="image/x-icon">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+    <link rel="stylesheet" href="css/chat.css">
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-content">
+            <a href="/">
+                <img src="assets/logo-arelance.jpg" alt="Arelance" class="logo-img">
+            </a>
+            <nav>
+                <a href="#beneficios">Beneficios</a>
+                <a href="#como-funciona">Cómo funciona</a>
+                <a href="#demo">Demo</a>
+            </nav>
+            <!-- Botones cuando NO está logueado -->
+            <div id="auth-buttons" style="display: flex; gap: 10px;">
+                <button id="btn-show-login" class="btn btn-secondary">Iniciar Sesión</button>
+                <button id="btn-show-register" class="btn btn-primary">Registrarse</button>
+            </div>
+            
+            <!-- Botones cuando SÍ está logueado -->
+            <div id="user-buttons" style="display: none; gap: 10px;">
+                <button id="btn-logout" class="btn btn-secondary">Cerrar Sesión</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Imputa tus horas<br><span>hablando con un bot</span></h1>
+            <p>Olvídate de formularios. Dile al bot qué horas poner y él se encarga del resto.</p>
+            <div class="hero-buttons">
+                <a href="#demo" class="btn btn-primary">Probar demo</a>
+                <a href="https://www.arelance.com" target="_blank" class="btn btn-secondary">Saber más</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Video Section -->
+    <section class="video-section">
+        <div class="video-container">
+            <iframe 
+                src="https://www.youtube.com/embed/Yn46sziSGZs?rel=0&modestbranding=1" 
+                title="Presentación GestiónITT Bot" 
+                frameborder="0" 
+                allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                allowfullscreen>
+            </iframe>
+        </div>
+    </section>
+
+    <!-- Beneficios -->
+    <section class="benefits" id="beneficios">
+        <h2 class="section-title">¿Por qué usar <span>Arebot</span>?</h2>
+        <p class="section-subtitle">Imputar horas nunca fue tan fácil</p>
+        <div class="benefits-grid">
+            <div class="benefit-card">
+                <div class="benefit-icon">💬</div>
+                <h3>Lenguaje natural</h3>
+                <p>Habla como si fuera un compañero. "Ponme 8 horas en Desarrollo hoy".</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">⚡</div>
+                <h3>Rápido</h3>
+                <p>Imputa en segundos, no minutos. Sin navegar por menús ni formularios.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">✅</div>
+                <h3>Sin errores</h3>
+                <p>El bot valida todo por ti. Te avisa si te pasas de horas o si falta algo.</p>
+            </div>
+            <div class="benefit-card">
+                <div class="benefit-icon">📱</div>
+                <h3>Multiplataforma</h3>
+                <p>Web, WhatsApp, donde quieras. Siempre disponible para ti.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- How it works -->
+    <section class="how-it-works" id="como-funciona">
+        <h2 class="section-title">¿Cómo <span>funciona</span>?</h2>
+        <p class="section-subtitle">Tan fácil como escribir un mensaje</p>
+        <div class="steps-container">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Escribe lo que quieres</h3>
+                <p>"Pon 8 horas en Desarrollo hoy" o "¿Qué tengo esta semana?"</p>
+            </div>
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>El bot entiende y ejecuta</h3>
+                <p>Interpreta tu mensaje y realiza la acción automáticamente.</p>
+            </div>
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Tus horas quedan registradas</h3>
+                <p>Confirma la acción y actualiza tu registro en tiempo real.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo -->
+    <section class="demo-section" id="demo">
+        <h2 class="section-title">Prueba la <span>Demo</span></h2>
+        <p class="section-subtitle">Explora el sistema de gestión de horas</p>
+
+        <div class="demo-container">
+            <div class="dashboard-container">
+                <!-- Main Content -->
+                <div class="main-content">
+                    <!-- Sidebar: Calendar -->
+                    <aside class="sidebar">
+                        <div class="calendar-container">
+                            <div class="calendar-header">
+                                <button id="btn-prev-month" class="btn-icon">←</button>
+                                <h3 id="calendar-title">Febrero 2026</h3>
+                                <button id="btn-next-month" class="btn-icon">→</button>
+                            </div>
+                            <div class="calendar-weekdays">
+                                <div>L</div>
+                                <div>M</div>
+                                <div>X</div>
+                                <div>J</div>
+                                <div>V</div>
+                                <div>S</div>
+                                <div>D</div>
+                            </div>
+                            <div id="calendar-grid" class="calendar-grid">
+                                <!-- Días generados dinámicamente -->
+                            </div>
+                        </div>
+                    </aside>
+                    
+                    <!-- Main Area: Weekly Table -->
+                    <main class="content-area">
+                        <div class="week-header-compact">
+                            <div style="display: flex; align-items: center; gap: 8px;">
+                                <button id="btn-prev-week" class="btn-icon-small">←</button>
+                                <h3 id="week-title" class="week-title-compact">Semana del 3 al 9 de Febrero 2026</h3>
+                                <button id="btn-next-week" class="btn-icon-small">→</button>
+                            </div>
+                            <div style="display: none; gap: 8px; align-items: center; position: relative;" id="project-buttons">
+                                <button id="btn-list-projects" class="btn-compact btn-secondary">LISTAR PROYECTOS</button>
+                                <button id="btn-create-project" class="btn-compact btn-primary">CREAR PROYECTO</button>
+                                
+                                <!-- Tooltip guía rápida - Solo visible cuando hay sesión -->
+                                <div id="quick-guide" class="quick-guide-tooltip" style="display: none;">
+                                    <div class="tooltip-icon">
+                                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <circle cx="12" cy="12" r="10"></circle>
+                                            <line x1="12" y1="16" x2="12" y2="12"></line>
+                                            <line x1="12" y1="8" x2="12.01" y2="8"></line>
+                                        </svg>
+                                    </div>
+                                    <div class="tooltip-content">
+                                        <h3 class="tooltip-title">Guía rápida</h3>
+                                        <ol class="tooltip-steps">
+                                            <li>
+                                                <strong>Crea un proyecto</strong>
+                                                <span>Usa el botón "CREAR PROYECTO"</span>
+                                            </li>
+                                            <li>
+                                                <strong>Imputa horas con el bot</strong>
+                                                <span>Ej: "Pon 8 horas en Desarrollo"</span>
+                                            </li>
+                                            <li>
+                                                <strong>Consulta tu semana</strong>
+                                                <span>Ej: "Resumen de la semana"</span>
+                                            </li>
+                                        </ol>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- Weekly Table -->
+                        <div class="table-container">
+                            <table class="weekly-table">
+                                <thead>
+                                    <tr>
+                                        <th class="col-project">PROYECTO</th>
+                                        <th class="col-day">L</th>
+                                        <th class="col-day">M</th>
+                                        <th class="col-day">X</th>
+                                        <th class="col-day">J</th>
+                                        <th class="col-day">V</th>
+                                        <th class="col-day disabled">S</th>
+                                        <th class="col-day disabled">D</th>
+                                        <th class="col-total">Total</th>
+                                    </tr>
+                                    <tr>
+                                        <th></th>
+                                        <th class="date-label" id="date-l">-</th>
+                                        <th class="date-label" id="date-m">-</th>
+                                        <th class="date-label" id="date-x">-</th>
+                                        <th class="date-label" id="date-j">-</th>
+                                        <th class="date-label" id="date-v">-</th>
+                                        <th class="date-label disabled">-</th>
+                                        <th class="date-label disabled">-</th>
+                                        <th></th>
+                                    </tr>
+                                </thead>
+                                <tbody id="table-body">
+                                    <!-- Filas generadas dinámicamente -->
+                                </tbody>
+                                <tfoot>
+                                    <tr class="total-row">
+                                        <td><strong>TOTAL</strong></td>
+                                        <td id="total-l">0h</td>
+                                        <td id="total-m">0h</td>
+                                        <td id="total-x">0h</td>
+                                        <td id="total-j">0h</td>
+                                        <td id="total-v">0h</td>
+                                        <td class="disabled">-</td>
+                                        <td class="disabled">-</td>
+                                        <td id="total-week">0h</td>
+                                    </tr>
+                                </tfoot>
+                            </table>
+                            
+                            <!-- Empty State cuando no está logueado -->
+                            <div id="empty-state-guest" class="empty-state" style="display: block;">
+                                <p>Bienvenido a la Demo</p>
+                                <p class="empty-state-hint">Para comenzar a imputar horas y usar el chatbot:</p>
+                                <div class="empty-state-buttons">
+                                    <button id="demo-login-btn" class="btn btn-primary">Iniciar Sesión</button>
+                                    <button id="demo-register-btn" class="btn btn-secondary">Registrarse</button>
+                                </div>
+                            </div>
+                            
+                            <!-- Empty State cuando está logueado sin proyectos -->
+                            <div id="empty-state" class="empty-state" style="display: none;">
+                                <p>No tienes proyectos creados</p>
+                                <p class="empty-state-hint">Haz clic en "CREAR PROYECTO" para comenzar</p>
+                            </div>
+                        </div>
+                    </main>
+                </div>
+            </div>
+            
+            <!-- Botón del Chatbot - Solo visible cuando hay sesión -->
+            <div id="chat-wrapper" class="chat-wrapper" style="display: none;">
+                <div class="chat-button-container">
+                    <button id="chat-button" class="chat-button" title="Abrir Chatbot">
+                        <img src="assets/arebot.png" alt="Arebot" class="chat-button-img">
+                    </button>
+                    <span class="chat-callout">¡Habla conmigo para imputar tus horas!</span>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Chatbot Container - Flotante (fuera del flujo normal) -->
+    <div id="chat-container" class="chat-container">
+        <div class="chat-header">
+            <div class="chat-header-avatar">
+                <img src="assets/arebot.png" alt="Arebot" class="chat-avatar-img">
+            </div>
+            <div class="chat-header-info">
+                <h3 class="chat-header-title">Arebot</h3>
+                <p id="chat-status" class="chat-header-status online">En línea</p>
+            </div>
+            <button id="chat-close-btn" class="chat-close-btn" title="Minimizar">×</button>
+        </div>
+        
+        <div id="chat-messages" class="chat-messages">
+            <div class="chat-welcome">
+                <div class="chat-welcome-icon">👋</div>
+                <div class="chat-welcome-title">¡Hola!</div>
+                <div class="chat-welcome-text">Soy tu asistente de gestión de horas.<br>Escríbeme para comenzar.</div>
+            </div>
+        </div>
+        
+        <div class="chat-input-container">
+            <input 
+                type="text" 
+                id="chat-input" 
+                class="chat-input" 
+                placeholder="Escribe un mensaje..."
+                maxlength="500"
+            >
+            <button id="chat-send-button" class="chat-send-button">➤</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <div class="footer-logo">
+                <img src="assets/images.png" alt="Arelance">
+            </div>
+            <p>© 2026 <a href="https://www.arelance.com" target="_blank">Arelance</a> · Building Digital Talent</p>
+        </div>
+    </footer>
+
+    <!-- Modal: Login -->
+    <div id="modal-login" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Iniciar Sesión</h3>
+                <button class="btn-close" id="modal-login-close">×</button>
+            </div>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="login-username">Usuario</label>
+                    <input 
+                        type="text" 
+                        id="login-username" 
+                        name="username" 
+                        required 
+                        minlength="3"
+                        placeholder="Ingresa tu usuario"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="login-password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="login-password" 
+                        name="password" 
+                        required 
+                        minlength="6"
+                        placeholder="Ingresa tu contraseña"
+                    >
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-login-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Entrar</button>
+                </div>
+                
+                <div id="login-error" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal: Register -->
+    <div id="modal-register" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Cuenta</h3>
+                <button class="btn-close" id="modal-register-close">×</button>
+            </div>
+            <form id="register-form">
+                <div class="form-group">
+                    <label for="register-username">Usuario</label>
+                    <input 
+                        type="text" 
+                        id="register-username" 
+                        name="username" 
+                        required 
+                        minlength="3"
+                        placeholder="Elige un usuario (mín. 3 caracteres)"
+                    >
+                </div>
+                
+                <div class="form-group">
+                    <label for="register-password">Contraseña</label>
+                    <input 
+                        type="password" 
+                        id="register-password" 
+                        name="password" 
+                        required 
+                        minlength="6"
+                        placeholder="Elige una contraseña (mín. 6 caracteres)"
+                    >
+                </div>
+                
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-register-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear Cuenta</button>
+                </div>
+                
+                <div id="register-error" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal: Create Project -->
+    <div id="modal-create-project" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Crear Proyecto</h3>
+                <button class="btn-close" id="modal-close">×</button>
+            </div>
+            <form id="form-create-project">
+                <div class="form-group">
+                    <label for="project-name">Nombre del Proyecto</label>
+                    <input 
+                        type="text" 
+                        id="project-name" 
+                        required 
+                        maxlength="100"
+                        placeholder="Ej: Desarrollo, Reuniones, Formación"
+                    >
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" id="modal-cancel">Cancelar</button>
+                    <button type="submit" class="btn btn-primary">Crear</button>
+                </div>
+                <div id="modal-error" class="error-message"></div>
+            </form>
+        </div>
+    </div>
+    
+    <!-- Modal: List Projects -->
+    <div id="modal-list-projects" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Mis Proyectos</h3>
+                <button class="btn-close" id="modal-list-close">×</button>
+            </div>
+            <div id="projects-list-container">
+                <!-- Lista de proyectos generada dinámicamente -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Modal: Confirm Delete Project -->
+    <div id="modal-confirm-delete" class="modal">
+        <div class="modal-content modal-confirm">
+            <div class="modal-header modal-header-warning">
+                <h3>Confirmar eliminación</h3>
+            </div>
+            <div class="modal-body">
+                <p id="confirm-delete-message" class="confirm-message"></p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" id="confirm-delete-cancel">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="confirm-delete-accept">Eliminar</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="js/websocket.js"></script>
+    <script src="js/calendar.js"></script>
+    <script src="js/table.js"></script>
+    <script src="js/projects.js"></script>
+    <script src="js/app.js"></script>
+    <script src="js/main.js"></script>
+    <script src="js/animations.js"></script>
+    <script src="js/chat.js"></script>
+</body>
+</html>
