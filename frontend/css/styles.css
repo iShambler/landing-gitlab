@@ -4,12 +4,12 @@
 
 :root {
     /* Colores principales */
-    --primary: #1e3a5f;
+    --primary: #143554;
     --primary-dark: #152a45;
     --primary-light: #2a4d7a;
-    --orange: #e85d04;
-    --orange-light: #f48c06;
-    --orange-dark: #d45a04;
+    --orange: #F05726;
+    --orange-light: #FF6B3D;
+    --orange-dark: #D94A1F;
     
     /* Escala de grises */
     --white: #ffffff;
