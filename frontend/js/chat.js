@@ -7,7 +7,7 @@ class ChatBot {
     constructor() {
         this.isOpen = false;
         this.token = null;
-        this.botApiUrl = 'http://localhost:8001/chat';
+        this.botApiUrl = 'https://aregest.arelance.com/chat';
         this.backendApiUrl = 'https://aregest.arelance.com/api/chat';  // Backend para historial
         this.isLoadingHistory = false;
         
