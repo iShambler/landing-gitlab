@@ -58,7 +58,7 @@ class TableManager {
         
         try {
             const response = await fetch(
-                `http://localhost:8000/api/imputaciones/semana/${this.formatDate(monday)}`,
+                `http://localhost:8003/api/imputaciones/semana/${this.formatDate(monday)}`,
                 {
                     headers: {
                         'Authorization': `Bearer ${token}`
@@ -85,7 +85,7 @@ class TableManager {
         const token = localStorage.getItem('token');
         
         try {
-            const response = await fetch('http://localhost:8000/api/projects', {
+            const response = await fetch('http://localhost:8003/api/projects', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -411,7 +411,7 @@ class TableManager {
                 // Poner todas las horas a 0 para esta semana
                 for (const date of dates) {
                     const dateStr = this.formatDate(date);
-                    await fetch(`http://localhost:8000/api/imputaciones`, {
+                    await fetch(`http://localhost:8003/api/imputaciones`, {
                         method: 'POST',
                         headers: {
                             'Authorization': `Bearer ${token}`,

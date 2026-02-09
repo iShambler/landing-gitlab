@@ -55,7 +55,7 @@ pip install -r requirements.txt
 python main.py
 ```
 
-El servidor estará disponible en: **http://localhost:8000**
+El servidor estará disponible en: **http://localhost:8003**
 
 ### 2. Frontend
 
@@ -133,7 +133,7 @@ El contador se resetea automáticamente cada 24 horas.
 ### WebSocket
 - `WS /ws/{token}` - Conexión WebSocket
 
-**Documentación completa:** http://localhost:8000/docs
+**Documentación completa:** http://localhost:8003/docs
 
 ---
 
@@ -164,7 +164,7 @@ C:\Proyectos\demo-gestion-horas\backend\demo.db
 ## 🐛 Solución de Problemas
 
 ### Error: "No se puede conectar al servidor"
-- Verifica que el backend esté corriendo en `http://localhost:8000`
+- Verifica que el backend esté corriendo en `http://localhost:8003`
 - Revisa la consola del servidor para ver logs
 
 ### Error: "WebSocket no conecta"

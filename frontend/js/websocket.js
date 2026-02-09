@@ -21,7 +21,7 @@ class WebSocketManager {
             return;
         }
         
-        const wsUrl = `ws://localhost:8000/ws/${this.token}`;
+        const wsUrl = `ws://localhost:8003/ws/${this.token}`;
         console.log('🔌 Conectando a WebSocket...');
         
         this.ws = new WebSocket(wsUrl);

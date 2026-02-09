@@ -2,7 +2,7 @@
  * Lógica de autenticación: Login y Registro
  */
 
-const API_URL = 'http://localhost:8000';
+const API_URL = 'http://localhost:8003';
 
 // =============================================================================
 // ELEMENTOS DEL DOM

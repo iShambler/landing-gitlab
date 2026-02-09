@@ -3,7 +3,7 @@
  * Maneja los modales de login y registro
  */
 
-const API_URL = 'http://localhost:8000';
+const API_URL = 'http://localhost:8003';
 
 // =============================================================================
 // CARGAR MODALES AL INICIO

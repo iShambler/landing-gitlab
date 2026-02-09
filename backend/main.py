@@ -75,9 +75,9 @@ async def startup_event():
         print("\n" + "="*70)
         print("🚀 DEMO GESTIÓN DE HORAS - SERVIDOR INICIADO")
         print("="*70)
-        print("📡 API: http://localhost:8000")
-        print("📖 Docs: http://localhost:8000/docs")
-        print("🔌 WebSocket: ws://localhost:8000/ws/{token}")
+        print("📡 API: http://localhost:8003")
+        print("📖 Docs: http://localhost:8003/docs")
+        print("🔌 WebSocket: ws://localhost:8003/ws/{token}")
         print("🌐 CORS: ✅ Habilitado")
         print("="*70 + "\n")
     except Exception as e:
@@ -123,7 +123,7 @@ if __name__ == "__main__":
     uvicorn.run(
         "main:app",
         host="0.0.0.0",
-        port=8000,
+        port=8003,
         reload=True,
         log_level="info"
     )
