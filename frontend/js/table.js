@@ -85,7 +85,7 @@ class TableManager {
         const token = localStorage.getItem('token');
         
         try {
-            const response = await fetch('http://localhost:8003/api/projects', {
+            const response = await fetch('https://aregest.arelance.com/api/projects', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
