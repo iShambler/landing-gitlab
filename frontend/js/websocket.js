@@ -21,7 +21,7 @@ class WebSocketManager {
             return;
         }
         
-        const wsUrl = `ws://aregest.arelance.com:8003/ws/${this.token}`;
+        const wsUrl = `wss://aregest.arelance.com/ws/${this.token}`;
         console.log('🔌 Conectando a WebSocket...');
         
         this.ws = new WebSocket(wsUrl);
