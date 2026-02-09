@@ -3,7 +3,7 @@
  * Maneja los modales de login y registro
  */
 
-const API_URL = 'http://localhost:8003';
+const API_URL = 'https://aregest.arelance.com';
 
 // =============================================================================
 // CARGAR MODALES AL INICIO
