@@ -69,7 +69,7 @@ class AppManager {
      */
     async verifyToken() {
         try {
-            const response = await fetch('http://localhost:8003/api/auth/me', {
+            const response = await fetch('http://aregest.arelance.com:8003/api/auth/me', {
                 headers: {
                     'Authorization': `Bearer ${this.token}`
                 }
@@ -198,7 +198,7 @@ class AppManager {
         const password = document.getElementById('login-password').value;
         
         try {
-            const response = await fetch('http://localhost:8003/api/auth/login', {
+            const response = await fetch('http://aregest.arelance.com:8003/api/auth/login', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -238,7 +238,7 @@ class AppManager {
         const password = document.getElementById('register-password').value;
         
         try {
-            const response = await fetch('http://localhost:8003/api/auth/register', {
+            const response = await fetch('http://aregest.arelance.com:8003/api/auth/register', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'

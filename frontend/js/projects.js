@@ -159,7 +159,7 @@ class ProjectManager {
         const token = localStorage.getItem('token');
         
         try {
-            const response = await fetch('http://localhost:8003/api/projects', {
+            const response = await fetch('http://aregest.arelance.com:8003/api/projects', {
                 method: 'POST',
                 headers: {
                     'Authorization': `Bearer ${token}`,
@@ -249,7 +249,7 @@ class ProjectManager {
         const token = localStorage.getItem('token');
         
         try {
-            const response = await fetch(`http://localhost:8003/api/projects/${projectId}`, {
+            const response = await fetch(`http://aregest.arelance.com:8003/api/projects/${projectId}`, {
                 method: 'DELETE',
                 headers: {
                     'Authorization': `Bearer ${token}`
@@ -291,7 +291,7 @@ class ProjectManager {
         const token = localStorage.getItem('token');
         
         try {
-            const response = await fetch('http://localhost:8003/api/projects', {
+            const response = await fetch('http://aregest.arelance.com:8003/api/projects', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

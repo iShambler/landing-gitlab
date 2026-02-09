@@ -8,7 +8,7 @@ class ChatBot {
         this.isOpen = false;
         this.token = null;
         this.botApiUrl = 'http://localhost:8001/chat';
-        this.backendApiUrl = 'http://localhost:8003/api/chat';  // Backend para historial
+        this.backendApiUrl = 'http://aregest.arelance.com:8003/api/chat';  // Backend para historial
         this.isLoadingHistory = false;
         
         // Elementos del DOM
