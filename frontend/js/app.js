@@ -10,12 +10,9 @@ class AppManager {
         this.isAuthenticated = false;
         
         // Elementos del DOM
-        this.authButtons = document.getElementById('auth-buttons');
         this.userButtons = document.getElementById('user-buttons');
         
         // Botones de autenticación
-        this.btnShowLogin = document.getElementById('btn-show-login');
-        this.btnShowRegister = document.getElementById('btn-show-register');
         this.btnLogout = document.getElementById('btn-logout');
         this.demoLoginBtn = document.getElementById('demo-login-btn');
         this.demoRegisterBtn = document.getElementById('demo-register-btn');
@@ -94,10 +91,6 @@ class AppManager {
      * Configura los event listeners
      */
     setupEventListeners() {
-        // Mostrar modales
-        this.btnShowLogin.addEventListener('click', () => this.showLoginModal());
-        this.btnShowRegister.addEventListener('click', () => this.showRegisterModal());
-        
         // Botones en el empty state de la demo
         if (this.demoLoginBtn) {
             this.demoLoginBtn.addEventListener('click', () => this.showLoginModal());
@@ -136,7 +129,6 @@ class AppManager {
         this.isAuthenticated = false;
         
         // Mostrar/ocultar elementos con validación
-        if (this.authButtons) this.authButtons.style.display = 'flex';
         if (this.userButtons) this.userButtons.style.display = 'none';
         if (this.emptyStateGuest) this.emptyStateGuest.style.display = 'block';
         if (this.emptyState) this.emptyState.style.display = 'none';
@@ -354,7 +346,6 @@ class AppManager {
         this.isAuthenticated = true;
         
         // Actualizar UI con validación
-        if (this.authButtons) this.authButtons.style.display = 'none';
         if (this.userButtons) this.userButtons.style.display = 'flex';
         if (this.emptyStateGuest) this.emptyStateGuest.style.display = 'none';
         if (this.projectButtons) this.projectButtons.style.display = 'flex';

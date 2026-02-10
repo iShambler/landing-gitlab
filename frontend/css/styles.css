@@ -85,6 +85,7 @@ header.scrolled {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    position: relative;
 }
 
 .logo-img {
@@ -92,9 +93,20 @@ header.scrolled {
     width: auto;
 }
 
+/* Botón de logout posicionado a la derecha */
+#user-buttons {
+    position: absolute;
+    right: 0;
+}
+
 .header-content .btn {
     padding: 0.6rem 1.5rem;
     font-size: 0.9rem;
+}
+
+nav {
+    display: flex;
+    align-items: center;
 }
 
 nav a {
@@ -1800,6 +1812,49 @@ body.loaded {
 }
 
 @media (max-width: 768px) {
+    /* HEADER MOBILE */
+    header {
+        padding: 0.75rem 1rem;
+    }
+    
+    .header-content {
+        flex-wrap: wrap;
+        justify-content: center;
+        gap: 0.5rem;
+    }
+    
+    .logo-img {
+        height: 40px;
+    }
+    
+    /* Nav debajo del logo en móvil */
+    nav {
+        order: 3;
+        width: 100%;
+        justify-content: center;
+        gap: 0.25rem;
+        border-top: 1px solid var(--gray-200);
+        padding-top: 0.5rem;
+    }
+    
+    nav a {
+        margin-left: 0;
+        font-size: 0.8rem;
+        padding: 0.25rem 0.75rem;
+    }
+    
+    /* Botón de logout compacto con icono */
+    #user-buttons {
+        position: static;
+        order: 2;
+        gap: 6px !important;
+    }
+    
+    #user-buttons .btn {
+        padding: 0.5rem 0.75rem;
+        font-size: 0.75rem;
+    }
+    
     .hero h1 {
         font-size: 2.5rem;
     }
@@ -1810,10 +1865,6 @@ body.loaded {
 
     .section-title {
         font-size: 2rem;
-    }
-
-    nav {
-        display: none;
     }
 
     .chat-container {
