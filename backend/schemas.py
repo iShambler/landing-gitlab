@@ -12,13 +12,20 @@ from typing import Optional, Dict
 
 class UserRegister(BaseModel):
     """Esquema para registro de usuario"""
-    username: str = Field(..., min_length=3, max_length=50)
+    email: str = Field(..., min_length=5, max_length=100)
     password: str = Field(..., min_length=6)
+    
+    @validator('email')
+    def validate_email(cls, v):
+        """Valida formato de email"""
+        if '@' not in v or '.' not in v.split('@')[1]:
+            raise ValueError('Email inválido')
+        return v.lower()
 
 
 class UserLogin(BaseModel):
     """Esquema para login de usuario"""
-    username: str
+    email: str
     password: str
 
 
@@ -31,7 +38,7 @@ class Token(BaseModel):
 class UserResponse(BaseModel):
     """Esquema para respuesta de usuario"""
     id: int
-    username: str
+    email: str
 
 
 # ============================================================================

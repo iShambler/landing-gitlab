@@ -194,7 +194,7 @@ class AppManager {
     async handleLogin(e) {
         e.preventDefault();
         
-        const username = document.getElementById('login-username').value;
+        const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
         
         try {
@@ -203,7 +203,7 @@ class AppManager {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ email, password })
             });
             
             const data = await response.json();
@@ -234,7 +234,7 @@ class AppManager {
     async handleRegister(e) {
         e.preventDefault();
         
-        const username = document.getElementById('register-username').value;
+        const email = document.getElementById('register-email').value;
         const password = document.getElementById('register-password').value;
         
         try {
@@ -243,7 +243,7 @@ class AppManager {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ username, password })
+                body: JSON.stringify({ email, password })
             });
             
             const data = await response.json();
@@ -272,7 +272,7 @@ class AppManager {
      * Ejecuta acciones después de un login exitoso
      */
     async onLoginSuccess() {
-        console.log('✅ Login exitoso:', this.userData.username);
+        console.log('✅ Login exitoso:', this.userData.email);
         this.isAuthenticated = true;
         
         // Actualizar UI con validación

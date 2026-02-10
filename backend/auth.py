@@ -121,7 +121,7 @@ def get_user_from_token(token: str) -> Optional[dict]:
         token: Token JWT como string
         
     Returns:
-        Diccionario con user_id y username o None
+        Diccionario con user_id y email o None
     """
     payload = decode_access_token(token)
     
@@ -129,14 +129,14 @@ def get_user_from_token(token: str) -> Optional[dict]:
         return None
     
     user_id = payload.get("user_id")
-    username = payload.get("username")
+    email = payload.get("email")
     
-    if user_id is None or username is None:
+    if user_id is None or email is None:
         return None
     
     return {
         "user_id": user_id,
-        "username": username,
+        "email": email,
         "exp": payload.get("exp")
     }
 
@@ -169,13 +169,13 @@ if __name__ == "__main__":
     
     # Test JWT
     print(f"\n4. Creando token JWT...")
-    token = create_access_token({"user_id": 1, "username": "test"})
+    token = create_access_token({"user_id": 1, "email": "test@example.com"})
     print(f"   Token: {token[:50]}...")
     
     print(f"\n5. Decodificando token...")
     user = get_user_from_token(token)
     if user:
-        print(f"   ✅ User: {user['username']}, ID: {user['user_id']}")
+        print(f"   ✅ User: {user['email']}, ID: {user['user_id']}")
     else:
         print("   ❌ Error")
     

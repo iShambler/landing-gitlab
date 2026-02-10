@@ -67,14 +67,14 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
         HTTPException 400: Si el usuario ya existe
     """
     # Verificar si el usuario ya existe
-    existing_user = db.query(User).filter(User.username == user_data.username).first()
+    existing_user = db.query(User).filter(User.email == user_data.email).first()
     if existing_user:
-        raise HTTPException(status_code=400, detail="El usuario ya existe")
+        raise HTTPException(status_code=400, detail="El email ya está registrado")
     
     # Crear nuevo usuario
     hashed_password = hash_password(user_data.password)
     new_user = User(
-        username=user_data.username,
+        email=user_data.email,
         password=hashed_password
     )
     
@@ -85,16 +85,16 @@ def register(user_data: UserRegister, db: Session = Depends(get_db)):
     # Crear token
     token = create_access_token({
         "user_id": new_user.id,
-        "username": new_user.username
+        "email": new_user.email
     })
     
-    print(f"[AUTH] ✅ Usuario registrado: {new_user.username}")
+    print(f"[AUTH] ✅ Usuario registrado: {new_user.email}")
     
     return {
         "token": token,
         "user": {
             "id": new_user.id,
-            "username": new_user.username
+            "email": new_user.email
         }
     }
 
@@ -115,24 +115,24 @@ def login(user_data: UserLogin, db: Session = Depends(get_db)):
         HTTPException 401: Si las credenciales son incorrectas
     """
     # Buscar usuario
-    user = db.query(User).filter(User.username == user_data.username).first()
+    user = db.query(User).filter(User.email == user_data.email).first()
     
     if not user or not verify_password(user_data.password, user.password):
-        raise HTTPException(status_code=401, detail="Usuario o contraseña incorrectos")
+        raise HTTPException(status_code=401, detail="Email o contraseña incorrectos")
     
     # Crear token
     token = create_access_token({
         "user_id": user.id,
-        "username": user.username
+        "email": user.email
     })
     
-    print(f"[AUTH] 🔓 Login exitoso: {user.username}")
+    print(f"[AUTH] 🔓 Login exitoso: {user.email}")
     
     return {
         "token": token,
         "user": {
             "id": user.id,
-            "username": user.username
+            "email": user.email
         }
     }
 
@@ -151,5 +151,5 @@ def get_me(current_user: dict = Depends(get_current_user), db: Session = Depends
     """
     return {
         "id": current_user["user_id"],
-        "username": current_user["username"]
+        "email": current_user["email"]
     }

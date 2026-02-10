@@ -117,7 +117,7 @@ function initializeAuthForms() {
         
         const formData = new FormData(loginForm);
         const data = {
-            username: formData.get('username'),
+            email: formData.get('email'),
             password: formData.get('password')
         };
         
@@ -152,13 +152,13 @@ function initializeAuthForms() {
         
         const formData = new FormData(registerForm);
         const data = {
-            username: formData.get('username'),
+            email: formData.get('email'),
             password: formData.get('password')
         };
         
         // Validaciones del lado del cliente
-        if (data.username.length < 3) {
-            showError(registerError, 'El usuario debe tener al menos 3 caracteres');
+        if (!data.email.includes('@') || !data.email.includes('.')) {
+            showError(registerError, 'Email inválido');
             return;
         }
         
