@@ -93,10 +93,9 @@ header.scrolled {
     width: auto;
 }
 
-/* Botón de logout posicionado a la derecha */
+/* Botón de logout */
 #user-buttons {
-    position: absolute;
-    right: 0;
+    margin-left: 1.5rem;
 }
 
 .header-content .btn {
@@ -107,6 +106,7 @@ header.scrolled {
 nav {
     display: flex;
     align-items: center;
+    margin-left: auto;
 }
 
 nav a {
