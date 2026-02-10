@@ -83,7 +83,7 @@ def get_semana(
             "horas": horas_dict
         })
     
-    print(f"[IMPUTACIONES] 📅 Semana del {lunes.isoformat()} para {current_user['username']}")
+    print(f"[IMPUTACIONES] 📅 Semana del {lunes.isoformat()} para {current_user['email']}")
     
     return {
         "semana": lunes.isoformat(),

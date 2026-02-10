@@ -33,7 +33,7 @@ def get_projects(current_user: dict = Depends(get_current_user), db: Session = D
         Project.user_id == current_user["user_id"]
     ).order_by(Project.created_at).all()
     
-    print(f"[PROJECTS] 📋 Listando {len(projects)} proyectos del usuario {current_user['username']}")
+    print(f"[PROJECTS] 📋 Listando {len(projects)} proyectos del usuario {current_user['email']}")
     
     return projects
 
@@ -84,7 +84,7 @@ def create_project(
     db.commit()
     db.refresh(new_project)
     
-    print(f"[PROJECTS] ✅ Proyecto creado: {new_project.nombre} por {current_user['username']}")
+    print(f"[PROJECTS] ✅ Proyecto creado: {new_project.nombre} por {current_user['email']}")
     
     return new_project
 
@@ -128,6 +128,6 @@ def delete_project(
     db.delete(project)
     db.commit()
     
-    print(f"[PROJECTS] 🗑️ Proyecto eliminado: {project_name} por {current_user['username']}")
+    print(f"[PROJECTS] 🗑️ Proyecto eliminado: {project_name} por {current_user['email']}")
     
     return {"message": f"Proyecto '{project_name}' eliminado correctamente"}

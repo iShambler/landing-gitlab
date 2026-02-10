@@ -293,6 +293,7 @@ class AppManager {
         if (table) table.style.display = 'table';
         
         // Conectar WebSocket
+        wsManager.token = this.token;
         wsManager.connect();
         
         // Registrar handler para mensajes del WebSocket

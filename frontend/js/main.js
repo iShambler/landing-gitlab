@@ -157,7 +157,7 @@ function initializeAuthForms() {
         };
         
         // Validaciones del lado del cliente
-        if (!data.email.includes('@') || !data.email.includes('.')) {
+        if (!data.email || !data.email.includes('@') || !data.email.includes('.')) {
             showError(registerError, 'Email inválido');
             return;
         }
