@@ -176,8 +176,10 @@ nav a:hover {
 }
 
 .video-container iframe {
-    width: 100%;
-    height: 100%;
+    width: 640px !important;
+    height: 360px !important;
+    max-width: 640px;
+    max-height: 360px;
     border-radius: 16px;
 }
 
