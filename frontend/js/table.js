@@ -341,11 +341,14 @@ class TableManager {
         row.appendChild(nameCell);
         
         // Columnas de días (L-V)
-        dates.forEach(date => {
+        const dayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+        dates.forEach((date, index) => {
             const dateStr = this.formatDate(date);
             const horas = proyecto.horas[dateStr] || 0;
             
             const cell = document.createElement('td');
+            cell.setAttribute('data-day', dayNames[index]);
+            
             const input = document.createElement('input');
             input.type = 'number';
             input.className = 'hour-input';

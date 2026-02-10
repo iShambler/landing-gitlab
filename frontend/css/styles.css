@@ -1259,6 +1259,7 @@ footer a:hover {
     border-radius: 8px;
     box-shadow: var(--shadow);
     height: fit-content;
+    min-height: 450px;
 }
 
 /* Header compacto de la tabla */
@@ -1838,6 +1839,204 @@ body.loaded {
     .tooltip-content::before,
     .tooltip-content::after {
         right: 16px;
+    }
+    
+    /* VIDEO RESPONSIVE */
+    .video-container {
+        width: 100%;
+        height: auto;
+        aspect-ratio: 16/9;
+    }
+    
+    .video-container iframe {
+        width: 100% !important;
+        height: 100% !important;
+        max-width: 100%;
+        max-height: 100%;
+    }
+    
+    /* HEADER COMPACTO EN MÓVIL */
+    .week-header-compact {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+    
+    .week-title-compact {
+        font-size: 14px;
+    }
+    
+    #project-buttons {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+    
+    .btn-compact {
+        font-size: 12px;
+        padding: 5px 10px;
+    }
+    
+    /* TABLA COMO CARDS EN MÓVIL */
+    .table-container {
+        overflow-x: visible;
+    }
+    
+    .weekly-table,
+    .weekly-table thead,
+    .weekly-table tbody,
+    .weekly-table th,
+    .weekly-table td,
+    .weekly-table tr,
+    .weekly-table tfoot {
+        display: block;
+    }
+    
+    /* Ocultar encabezado de tabla original */
+    .weekly-table thead {
+        display: none;
+    }
+    
+    /* Cada proyecto es una card */
+    .weekly-table tbody .project-row {
+        background: var(--white);
+        border: 1px solid var(--gray-300);
+        border-radius: 8px;
+        margin-bottom: 16px;
+        padding: 12px;
+        box-shadow: var(--shadow);
+    }
+    
+    .weekly-table tbody .project-row td {
+        border: none;
+        padding: 8px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    /* Primera celda: nombre del proyecto */
+    .weekly-table tbody .project-row td:first-child {
+        border-bottom: 2px solid var(--gray-200);
+        padding-bottom: 12px;
+        margin-bottom: 8px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+    
+    /* Añadir etiquetas antes de cada día */
+    .weekly-table tbody .project-row td:not(:first-child):not(:last-child)::before {
+        content: attr(data-day);
+        font-weight: 600;
+        color: var(--gray-600);
+        font-size: 14px;
+        min-width: 60px;
+    }
+    
+    /* Última celda: Total */
+    .weekly-table tbody .project-row td:last-child {
+        border-top: 2px solid var(--gray-200);
+        padding-top: 12px;
+        margin-top: 8px;
+        font-weight: 700;
+        background: #F0F9FF;
+        margin-left: -12px;
+        margin-right: -12px;
+        padding-left: 12px;
+        padding-right: 12px;
+    }
+    
+    .weekly-table tbody .project-row td:last-child::before {
+        content: 'Total Semanal';
+        font-weight: 700;
+        color: var(--primary);
+    }
+    
+    /* Ocultar sábado y domingo en móvil */
+    .weekly-table tbody .project-row td.disabled {
+        display: none;
+    }
+    
+    /* Fila de totales como card especial */
+    .weekly-table tfoot .total-row {
+        background: linear-gradient(135deg, var(--primary) 0%, var(--primary-dark) 100%);
+        color: var(--white);
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 16px;
+    }
+    
+    .weekly-table tfoot .total-row td {
+        border: none;
+        padding: 6px 0;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: var(--white);
+    }
+    
+    .weekly-table tfoot .total-row td:first-child {
+        border-bottom: 2px solid rgba(255, 255, 255, 0.3);
+        padding-bottom: 12px;
+        margin-bottom: 8px;
+        font-size: 18px;
+        display: block;
+        text-align: center;
+    }
+    
+    .weekly-table tfoot .total-row td:not(:first-child):not(:last-child)::before {
+        content: attr(data-day);
+        font-weight: 600;
+        font-size: 14px;
+        min-width: 60px;
+    }
+    
+    .weekly-table tfoot .total-row td:last-child {
+        border-top: 2px solid rgba(255, 255, 255, 0.3);
+        padding-top: 12px;
+        margin-top: 8px;
+        font-size: 20px;
+        font-weight: 700;
+        background: rgba(255, 255, 255, 0.1);
+        margin-left: -16px;
+        margin-right: -16px;
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+    
+    .weekly-table tfoot .total-row td:last-child::before {
+        content: 'Total General';
+        color: var(--orange);
+    }
+    
+    /* Ocultar sábado y domingo en totales */
+    .weekly-table tfoot .total-row td.disabled {
+        display: none;
+    }
+    
+    /* Input de horas más grande en móvil */
+    .hour-input {
+        width: 70px;
+        padding: 8px;
+        font-size: 16px;
+    }
+    
+    /* Sidebar calendario en móvil */
+    .sidebar {
+        padding: 16px;
+    }
+    
+    .calendar-header h3 {
+        font-size: 16px;
+    }
+    
+    /* Botones más grandes en móvil */
+    .empty-state-buttons {
+        flex-direction: column;
+    }
+    
+    .empty-state-buttons .btn {
+        min-width: auto;
+        width: 100%;
     }
 }
 

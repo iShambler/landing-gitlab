@@ -152,6 +152,14 @@ class AppManager {
         // Ocultar tabla
         const table = document.querySelector('.weekly-table');
         if (table) table.style.display = 'none';
+        
+        // Ocultar chatbot wrapper
+        const chatWrapper = document.getElementById('chat-wrapper');
+        if (chatWrapper) chatWrapper.style.display = 'none';
+        
+        // Cerrar chat si está abierto
+        const chatContainer = document.getElementById('chat-container');
+        if (chatContainer) chatContainer.classList.remove('open');
     }
     
     /**
@@ -197,6 +205,10 @@ class AppManager {
         const email = document.getElementById('login-email').value;
         const password = document.getElementById('login-password').value;
         
+        // Limpiar errores previos
+        this.loginError.textContent = '';
+        this.loginError.classList.remove('show');
+        
         try {
             const response = await fetch('https://aregest.arelance.com/api/auth/login', {
                 method: 'POST',
@@ -206,6 +218,7 @@ class AppManager {
                 body: JSON.stringify({ email, password })
             });
             
+            // Parsear respuesta
             const data = await response.json();
             
             if (response.ok) {
@@ -220,11 +233,16 @@ class AppManager {
                 // Inicializar dashboard
                 await this.onLoginSuccess();
             } else {
-                this.loginError.textContent = data.detail || 'Error al iniciar sesión';
+                // Mostrar error al usuario
+                const errorMessage = data.detail || data.message || 'Error al iniciar sesión';
+                this.loginError.textContent = errorMessage;
+                this.loginError.classList.add('show');
+                console.error('❌ Error de login:', errorMessage);
             }
         } catch (error) {
-            console.error('Error en login:', error);
+            console.error('❌ Error en login:', error);
             this.loginError.textContent = 'Error de conexión con el servidor';
+            this.loginError.classList.add('show');
         }
     }
     
@@ -237,6 +255,10 @@ class AppManager {
         const email = document.getElementById('register-email').value;
         const password = document.getElementById('register-password').value;
         
+        // Limpiar errores previos
+        this.registerError.textContent = '';
+        this.registerError.classList.remove('show');
+        
         try {
             const response = await fetch('https://aregest.arelance.com/api/auth/register', {
                 method: 'POST',
@@ -246,6 +268,7 @@ class AppManager {
                 body: JSON.stringify({ email, password })
             });
             
+            // Parsear respuesta
             const data = await response.json();
             
             if (response.ok) {
@@ -260,11 +283,16 @@ class AppManager {
                 // Inicializar dashboard
                 await this.onLoginSuccess();
             } else {
-                this.registerError.textContent = data.detail || 'Error al registrarse';
+                // Mostrar error al usuario
+                const errorMessage = data.detail || data.message || 'Error al registrarse';
+                this.registerError.textContent = errorMessage;
+                this.registerError.classList.add('show');
+                console.error('❌ Error de registro:', errorMessage);
             }
         } catch (error) {
-            console.error('Error en registro:', error);
+            console.error('❌ Error en registro:', error);
             this.registerError.textContent = 'Error de conexión con el servidor';
+            this.registerError.classList.add('show');
         }
     }
     
