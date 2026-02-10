@@ -218,8 +218,20 @@ class AppManager {
                 body: JSON.stringify({ email, password })
             });
             
-            // Parsear respuesta
-            const data = await response.json();
+            // Intentar parsear respuesta
+            let data;
+            try {
+                data = await response.json();
+            } catch (parseError) {
+                console.error('❌ Error parseando respuesta:', parseError);
+                data = { detail: 'Error del servidor' };
+            }
+            
+            console.log('📦 Respuesta del servidor:', {
+                status: response.status,
+                ok: response.ok,
+                data: data
+            });
             
             if (response.ok) {
                 // Guardar token
@@ -234,10 +246,24 @@ class AppManager {
                 await this.onLoginSuccess();
             } else {
                 // Mostrar error al usuario
-                const errorMessage = data.detail || data.message || 'Error al iniciar sesión';
+                let errorMessage = 'Error al iniciar sesión';
+                
+                // Intentar extraer el mensaje de error de varias fuentes
+                if (data.detail) {
+                    errorMessage = data.detail;
+                } else if (data.message) {
+                    errorMessage = data.message;
+                } else if (data.error) {
+                    errorMessage = data.error;
+                } else if (response.status === 400) {
+                    errorMessage = 'Credenciales inválidas';
+                } else if (response.status === 401) {
+                    errorMessage = 'Email o contraseña incorrectos';
+                }
+                
                 this.loginError.textContent = errorMessage;
                 this.loginError.classList.add('show');
-                console.error('❌ Error de login:', errorMessage);
+                console.error('❌ Error de login:', errorMessage, data);
             }
         } catch (error) {
             console.error('❌ Error en login:', error);
@@ -268,8 +294,20 @@ class AppManager {
                 body: JSON.stringify({ email, password })
             });
             
-            // Parsear respuesta
-            const data = await response.json();
+            // Intentar parsear respuesta
+            let data;
+            try {
+                data = await response.json();
+            } catch (parseError) {
+                console.error('❌ Error parseando respuesta:', parseError);
+                data = { detail: 'Error del servidor' };
+            }
+            
+            console.log('📦 Respuesta del servidor:', {
+                status: response.status,
+                ok: response.ok,
+                data: data
+            });
             
             if (response.ok) {
                 // Guardar token
@@ -284,10 +322,22 @@ class AppManager {
                 await this.onLoginSuccess();
             } else {
                 // Mostrar error al usuario
-                const errorMessage = data.detail || data.message || 'Error al registrarse';
+                let errorMessage = 'Error al registrarse';
+                
+                // Intentar extraer el mensaje de error de varias fuentes
+                if (data.detail) {
+                    errorMessage = data.detail;
+                } else if (data.message) {
+                    errorMessage = data.message;
+                } else if (data.error) {
+                    errorMessage = data.error;
+                } else if (response.status === 400) {
+                    errorMessage = 'Datos inválidos. Verifica tu email y contraseña';
+                }
+                
                 this.registerError.textContent = errorMessage;
                 this.registerError.classList.add('show');
-                console.error('❌ Error de registro:', errorMessage);
+                console.error('❌ Error de registro:', errorMessage, data);
             }
         } catch (error) {
             console.error('❌ Error en registro:', error);
