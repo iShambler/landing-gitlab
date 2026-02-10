@@ -344,7 +344,7 @@ class ChatBot {
         
         typingEl.innerHTML = `
             <div class="chat-typing active">
-                <span class="chat-typing-text">Arebot está escribiendo</span>
+                <span class="chat-typing-text">Aregest está escribiendo</span>
                 <div class="chat-typing-dots">
                     <div class="chat-typing-dot"></div>
                     <div class="chat-typing-dot"></div>
