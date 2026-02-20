@@ -171,7 +171,6 @@ class ProjectManager {
             const result = await response.json();
             
             if (response.ok) {
-                console.log('✅ Proyecto creado:', result);
                 this.closeModal();
                 
                 // Recargar SOLO la lista de proyectos
@@ -187,7 +186,6 @@ class ProjectManager {
                 this.showError(result.detail || 'Error al crear el proyecto');
             }
         } catch (error) {
-            console.error('❌ Error:', error);
             this.showError('Error de conexión con el servidor');
         }
     }
@@ -257,8 +255,6 @@ class ProjectManager {
             });
             
             if (response.ok) {
-                console.log('✅ Proyecto eliminado');
-                
                 // Cerrar modal
                 this.closeConfirmDeleteModal();
                 
@@ -278,7 +274,6 @@ class ProjectManager {
                 this.closeConfirmDeleteModal();
             }
         } catch (error) {
-            console.error('❌ Error:', error);
             alert('Error de conexión con el servidor.');
             this.closeConfirmDeleteModal();
         }
@@ -299,13 +294,10 @@ class ProjectManager {
             
             if (response.ok) {
                 this.projects = await response.json();
-                console.log(`📋 Proyectos cargados: ${this.projects.length}`);
-                
-                // Actualizar botón de crear proyecto
                 this.updateCreateButton();
             }
         } catch (error) {
-            console.error('❌ Error cargando proyectos:', error);
+            // Silenciar error de carga
         }
     }
     

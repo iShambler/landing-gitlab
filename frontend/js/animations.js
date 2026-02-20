@@ -169,5 +169,4 @@ if (prefersReducedMotion) {
     document.documentElement.style.setProperty('--animation-duration', '0.01s');
 }
 
-// Console log para debug
-console.log('🎨 Animaciones de scroll cargadas');
+

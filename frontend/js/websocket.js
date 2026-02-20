@@ -12,85 +12,49 @@ class WebSocketManager {
         this.messageHandlers = [];
     }
     
-    /**
-     * Conecta al WebSocket
-     */
     connect() {
-        if (!this.token) {
-            console.error('❌ No hay token disponible');
-            return;
-        }
+        if (!this.token) return;
         
         const wsUrl = `wss://aregest.arelance.com/ws/${this.token}`;
-        console.log('🔌 Conectando a WebSocket...');
-        
         this.ws = new WebSocket(wsUrl);
         
         this.ws.onopen = () => {
-            console.log('✅ WebSocket conectado');
             this.reconnectAttempts = 0;
         };
         
         this.ws.onmessage = (event) => {
             try {
                 const data = JSON.parse(event.data);
-                console.log('📨 Mensaje recibido:', data);
-                
-                // Notificar a todos los handlers registrados
                 this.messageHandlers.forEach(handler => handler(data));
             } catch (error) {
-                console.error('❌ Error procesando mensaje:', error);
+                // Silenciar error de parseo
             }
         };
         
-        this.ws.onerror = (error) => {
-            console.error('❌ Error en WebSocket:', error);
-        };
+        this.ws.onerror = () => {};
         
         this.ws.onclose = () => {
-            console.log('🔌 WebSocket desconectado');
             this.attemptReconnect();
         };
     }
     
-    /**
-     * Intenta reconectar automáticamente
-     */
     attemptReconnect() {
         if (this.reconnectAttempts < this.maxReconnectAttempts) {
             this.reconnectAttempts++;
-            console.log(`🔄 Intentando reconectar (${this.reconnectAttempts}/${this.maxReconnectAttempts})...`);
-            
-            setTimeout(() => {
-                this.connect();
-            }, this.reconnectDelay);
-        } else {
-            console.error('❌ Máximo de intentos de reconexión alcanzado');
+            setTimeout(() => this.connect(), this.reconnectDelay);
         }
     }
     
-    /**
-     * Envía un mensaje al servidor
-     */
     send(data) {
         if (this.ws && this.ws.readyState === WebSocket.OPEN) {
             this.ws.send(JSON.stringify(data));
-            console.log('📤 Mensaje enviado:', data);
-        } else {
-            console.error('❌ WebSocket no está conectado');
         }
     }
     
-    /**
-     * Registra un handler para mensajes entrantes
-     */
     onMessage(handler) {
         this.messageHandlers.push(handler);
     }
     
-    /**
-     * Imputa horas vía WebSocket
-     */
     imputarHoras(projectId, fecha, horas) {
         this.send({
             action: 'imputar',
@@ -100,9 +64,6 @@ class WebSocketManager {
         });
     }
     
-    /**
-     * Desconecta el WebSocket
-     */
     disconnect() {
         if (this.ws) {
             this.ws.close();
@@ -111,5 +72,4 @@ class WebSocketManager {
     }
 }
 
-// Instancia global
 const wsManager = new WebSocketManager();

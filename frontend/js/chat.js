@@ -8,7 +8,7 @@ class ChatBot {
         this.isOpen = false;
         this.token = null;
         this.botApiUrl = 'https://aregest.arelance.com/chat';
-        this.backendApiUrl = 'https://aregest.arelance.com/api/chat';  // Backend para historial
+        this.backendApiUrl = 'https://aregest.arelance.com/api/chat';
         this.isLoadingHistory = false;
         
         // Elementos del DOM
@@ -30,12 +30,9 @@ class ChatBot {
     }
     
     /**
-     * Inicializa el chatbot
+     * Inicializa el asistente
      */
     init() {
-        console.log('🤖 Inicializando ChatBot...');
-        
-        // Obtener elementos del DOM
         this.chatWrapper = document.getElementById('chat-wrapper');
         this.chatButton = document.getElementById('chat-button');
         this.chatContainer = document.getElementById('chat-container');
@@ -45,36 +42,24 @@ class ChatBot {
         this.chatCloseBtn = document.getElementById('chat-close-btn');
         this.chatStatus = document.getElementById('chat-status');
         
-        if (!this.chatWrapper || !this.chatButton || !this.chatContainer) {
-            console.warn('⚠️ Elementos del chat no encontrados');
-            return;
-        }
+        if (!this.chatWrapper || !this.chatButton || !this.chatContainer) return;
         
-        // Setup event listeners
         this.setupEventListeners();
-        
-        // Verificar si hay sesión activa
         this.checkSession();
-        
-        console.log('✅ ChatBot inicializado');
     }
     
     /**
      * Configura los event listeners
      */
     setupEventListeners() {
-        // Toggle chat al hacer clic en el botón
         this.chatButton.addEventListener('click', () => this.toggleChat());
         
-        // Cerrar chat con el botón de minimizar
         if (this.chatCloseBtn) {
             this.chatCloseBtn.addEventListener('click', () => this.toggleChat());
         }
         
-        // Enviar mensaje al hacer clic en el botón
         this.chatSendButton.addEventListener('click', () => this.sendMessage());
         
-        // Enviar mensaje con Enter
         this.chatInput.addEventListener('keypress', (e) => {
             if (e.key === 'Enter' && !e.shiftKey) {
                 e.preventDefault();
@@ -90,13 +75,10 @@ class ChatBot {
         this.token = localStorage.getItem('token');
         
         if (this.token) {
-            // Hay sesión activa, mostrar wrapper del chat
             this.chatWrapper.style.display = 'flex';
             this.updateStatus(true);
-            // Cargar historial de mensajes
             this.loadChatHistory();
         } else {
-            // No hay sesión, ocultar wrapper
             this.chatWrapper.style.display = 'none';
             this.isOpen = false;
             this.chatContainer.classList.remove('open');
@@ -120,24 +102,19 @@ class ChatBot {
         this.isLoadingHistory = true;
         
         try {
-            const response = await fetch(`${this.backendApiUrl}/messages?limit=50`, {
+            const response = await fetch(`${this.backendApiUrl}/messages?limit=500`, {
                 headers: {
                     'Authorization': `Bearer ${this.token}`
                 }
             });
             
-            if (!response.ok) {
-                console.warn('⚠️ No se pudo cargar el historial');
-                return;
-            }
+            if (!response.ok) return;
             
-            const messages = await response.json();
+            let messages = await response.json();
             
-            // Limpiar mensajes previos (excepto el mensaje de bienvenida)
             const welcomeMsg = this.chatMessages.querySelector('.chat-welcome');
             this.chatMessages.innerHTML = '';
             
-            // Si no hay mensajes, mostrar bienvenida
             if (messages.length === 0) {
                 if (welcomeMsg) {
                     this.chatMessages.appendChild(welcomeMsg);
@@ -145,19 +122,26 @@ class ChatBot {
                 return;
             }
             
-            // Cargar mensajes del historial
+            // Quedarnos solo con los últimos 50 mensajes (los más recientes)
+            const MAX_DISPLAY = 50;
+            if (messages.length > MAX_DISPLAY) {
+                messages = messages.slice(-MAX_DISPLAY);
+            }
+            
+            // Cargar mensajes sin hacer scroll individual
             messages.forEach(msg => {
                 if (msg.role === 'user') {
-                    this.addUserMessage(msg.message, false);  // false = no guardar de nuevo
+                    this.addUserMessage(msg.message, false, true);
                 } else if (msg.role === 'bot') {
-                    this.addBotMessage(msg.message, false);
+                    this.addBotMessage(msg.message, false, true);
                 }
             });
             
-            console.log(`📝 Cargados ${messages.length} mensajes del historial`);
+            // Scroll al final una sola vez después de cargar todo
+            this.scrollToBottom();
             
         } catch (error) {
-            console.error('❌ Error cargando historial:', error);
+            // Silenciar error de carga de historial
         } finally {
             this.isLoadingHistory = false;
         }
@@ -179,7 +163,7 @@ class ChatBot {
                 body: JSON.stringify({ role, message })
             });
         } catch (error) {
-            console.error('❌ Error guardando mensaje:', error);
+            // Silenciar error de guardado
         }
     }
     
@@ -194,8 +178,11 @@ class ChatBot {
             this.chatButton.classList.add('active');
             this.chatInput.focus();
             
+            // Scroll al final al abrir (por si el historial ya estaba cargado)
+            this.scrollToBottom();
+            
             // Si es la primera vez que abre el chat, mostrar mensaje de bienvenida
-            if (this.chatMessages.children.length === 1) { // Solo tiene el mensaje de bienvenida
+            if (this.chatMessages.children.length === 1) {
                 this.addBotMessage('Bienvenido al asistente de gestión de horas. Puedes realizar operaciones como:\n\n• "¿Qué horas tengo esta semana?"\n• "Pon 8h en Desarrollo hoy"\n• "3h en Reuniones y 5h en Desarrollo"');
             }
         } else {
@@ -220,24 +207,18 @@ class ChatBot {
     }
     
     /**
-     * Envía un mensaje al bot
+     * Envía un mensaje al asistente
      */
     async sendMessage() {
         const message = this.chatInput.value.trim();
         
         if (!message) return;
         
-        // Limpiar input
         this.chatInput.value = '';
-        
-        // Mostrar mensaje del usuario
         this.addUserMessage(message);
-        
-        // Mostrar indicador de "escribiendo..."
         this.showTyping();
         
         try {
-            // Enviar al backend del bot
             const response = await fetch(this.botApiUrl, {
                 method: 'POST',
                 headers: {
@@ -255,17 +236,12 @@ class ChatBot {
             
             const data = await response.json();
             
-            // Ocultar indicador
             this.hideTyping();
-            
-            // Mostrar respuesta del bot
             this.addBotMessage(data.response || data.message || 'Se produjo un error. Por favor, inténtalo de nuevo.');
             
             // Si el comando fue exitoso, refrescar la tabla
             if (data.success && this.isCommandoAccion(data.response)) {
-                console.log('🔄 Refrescando tabla después del comando...');
                 if (window.tableManager) {
-                    // Pequeño delay para que el backend termine de procesar
                     setTimeout(() => {
                         window.tableManager.loadWeek(new Date());
                     }, 500);
@@ -273,7 +249,6 @@ class ChatBot {
             }
             
         } catch (error) {
-            console.error('❌ Error al enviar mensaje:', error);
             this.hideTyping();
             this.addBotMessage('⚠️ No se pudo establecer conexión con el servidor. Verifica que el servicio esté activo.');
             this.updateStatus(false);
@@ -282,8 +257,9 @@ class ChatBot {
     
     /**
      * Añade un mensaje del usuario
+     * @param {boolean} skipScroll - Si true, no hace scroll (para carga masiva de historial)
      */
-    addUserMessage(text, save = true) {
+    addUserMessage(text, save = true, skipScroll = false) {
         const messageEl = document.createElement('div');
         messageEl.className = 'chat-message user';
         
@@ -297,18 +273,16 @@ class ChatBot {
         `;
         
         this.chatMessages.appendChild(messageEl);
-        this.scrollToBottom();
         
-        // Guardar en BD si es un mensaje nuevo
-        if (save) {
-            this.saveChatMessage('user', text);
-        }
+        if (!skipScroll) this.scrollToBottom();
+        if (save) this.saveChatMessage('user', text);
     }
     
     /**
-     * Añade un mensaje del bot
+     * Añade un mensaje del asistente
+     * @param {boolean} skipScroll - Si true, no hace scroll (para carga masiva de historial)
      */
-    addBotMessage(text, save = true) {
+    addBotMessage(text, save = true, skipScroll = false) {
         const messageEl = document.createElement('div');
         messageEl.className = 'chat-message bot';
         
@@ -322,29 +296,24 @@ class ChatBot {
         `;
         
         this.chatMessages.appendChild(messageEl);
-        this.scrollToBottom();
         
-        // Guardar en BD si es un mensaje nuevo
-        if (save) {
-            this.saveChatMessage('bot', text);
-        }
+        if (!skipScroll) this.scrollToBottom();
+        if (save) this.saveChatMessage('bot', text);
     }
     
     /**
      * Muestra el indicador de "escribiendo..."
      */
     showTyping() {
-        // Eliminar indicador previo si existe
         this.hideTyping();
         
-        // Crear el indicador como un mensaje
         const typingEl = document.createElement('div');
         typingEl.className = 'chat-message bot';
         typingEl.id = 'typing-indicator';
         
         typingEl.innerHTML = `
             <div class="chat-typing active">
-                <span class="chat-typing-text">Aregest está escribiendo</span>
+                <span class="chat-typing-text">Aregest está procesando</span>
                 <div class="chat-typing-dots">
                     <div class="chat-typing-dot"></div>
                     <div class="chat-typing-dot"></div>
@@ -353,7 +322,6 @@ class ChatBot {
             </div>
         `;
         
-        // Añadir después del último mensaje
         this.chatMessages.appendChild(typingEl);
         this.scrollToBottom();
     }
@@ -372,24 +340,16 @@ class ChatBot {
      * Hace scroll hasta el final de los mensajes
      */
     scrollToBottom() {
-        setTimeout(() => {
+        requestAnimationFrame(() => {
             this.chatMessages.scrollTop = this.chatMessages.scrollHeight;
-        }, 100);
+        });
     }
     
     /**
      * Detecta si la respuesta es de un comando de acción (que modifica datos)
      */
     isCommandoAccion(respuesta) {
-        // Si la respuesta contiene emojis de éxito o indica imputación
-        const indicadoresAccion = [
-            '✅',  // Checkmark (imputación exitosa)
-            'imputad',
-            'registrad',
-            'guardad',
-            'actualizado'
-        ];
-        
+        const indicadoresAccion = ['✅', 'imputad', 'registrad', 'guardad', 'actualizado'];
         const respuestaLower = respuesta.toLowerCase();
         return indicadoresAccion.some(indicador => 
             respuestaLower.includes(indicador.toLowerCase())
@@ -409,7 +369,6 @@ class ChatBot {
      * Limpia el historial de mensajes
      */
     clearMessages() {
-        // Mantener solo el mensaje de bienvenida
         const welcomeMsg = this.chatMessages.querySelector('.chat-welcome');
         this.chatMessages.innerHTML = '';
         if (welcomeMsg) {
@@ -418,10 +377,9 @@ class ChatBot {
     }
 }
 
-// Crear instancia global del chatbot
+// Instancia global
 const chatBot = new ChatBot();
 
-// Exportar para uso en otros módulos
 if (typeof window !== 'undefined') {
     window.chatBot = chatBot;
 }
