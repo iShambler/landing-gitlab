@@ -326,7 +326,6 @@ nav a:hover {
     align-items: center;
     gap: 2.5rem;
     position: relative;
-    z-index: 1;
 }
 
 .whatsapp-banner-icon {
@@ -507,7 +506,7 @@ nav a:hover {
     opacity: 0;
     visibility: hidden;
     transition: all 0.3s ease;
-    z-index: 100;
+    z-index: 9998;
 }
 
 /* Flechita hacia ABAJO (apunta al icono) */
