@@ -166,7 +166,7 @@ class TableManager {
             nameCell.innerHTML = `
                 <div class="project-selector">
                     <select class="select-project" disabled>
-                        <option value="">Sin proyectos - crear primero</option>
+                        <option value="">Sin proyectos — crea uno primero</option>
                     </select>
                 </div>
             `;
@@ -175,7 +175,7 @@ class TableManager {
             nameCell.innerHTML = `
                 <div class="project-selector">
                     <select class="select-project" disabled>
-                        <option value="">Máximo alcanzado</option>
+                        <option value="">Límite de proyectos alcanzado</option>
                     </select>
                 </div>
             `;
@@ -401,8 +401,8 @@ class TableManager {
     removeProjectFromWeek(projectId, projectName) {
         // Usar el modal de confirmación personalizado
         const message = `
-            ¿Quitar <strong>"${projectName}"</strong> de esta semana?<br><br>
-            Se eliminarán las horas imputadas <strong>solo en esta semana</strong> (L-V).
+            ¿Eliminar <strong>"${projectName}"</strong> de esta semana?<br><br>
+            Se borrarán las horas imputadas <strong>únicamente en esta semana</strong> (lunes a viernes).
         `;
         
         // Callback que se ejecutará si el usuario confirma
@@ -435,7 +435,7 @@ class TableManager {
                 
             } catch (error) {
                 console.error('❌ Error:', error);
-                alert('Error al quitar el proyecto de la semana');
+                alert('Error al eliminar las imputaciones de esta semana.');
             }
         };
         
@@ -455,7 +455,7 @@ class TableManager {
         
         // Validar horas
         if (horas < 0 || horas > 24) {
-            alert('Las horas deben estar entre 0 y 24');
+            alert('El valor debe estar entre 0 y 24 horas.');
             input.value = 0;
             return;
         }
@@ -595,7 +595,7 @@ class TableManager {
                 nameCell.innerHTML = `
                     <div class="project-selector">
                         <select class="select-project" disabled>
-                            <option value="">Sin proyectos - crear primero</option>
+                            <option value="">Sin proyectos — crea uno primero</option>
                         </select>
                     </div>
                 `;
@@ -603,7 +603,7 @@ class TableManager {
                 nameCell.innerHTML = `
                     <div class="project-selector">
                         <select class="select-project" disabled>
-                            <option value="">Máximo alcanzado</option>
+                            <option value="">Límite de proyectos alcanzado</option>
                         </select>
                     </div>
                 `;
@@ -650,7 +650,7 @@ class TableManager {
             nameCell.innerHTML = `
                 <div class="project-selector">
                     <select class="select-project" disabled>
-                        <option value="">No hay proyectos (crear primero)</option>
+                        <option value="">Sin proyectos — crea uno primero</option>
                     </select>
                 </div>
             `;
@@ -659,7 +659,7 @@ class TableManager {
             nameCell.innerHTML = `
                 <div class="project-selector">
                     <select class="select-project" disabled>
-                        <option value="">Todos los proyectos ya seleccionados</option>
+                        <option value="">Límite de proyectos alcanzado</option>
                     </select>
                 </div>
             `;

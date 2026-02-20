@@ -1,6 +1,6 @@
 /**
- * Gestor del Chatbot estilo WhatsApp
- * Permite comunicación con el bot de imputación de horas
+ * Gestor del Asistente de imputación
+ * Permite comunicación con el asistente de gestión de horas
  */
 
 class ChatBot {
@@ -196,7 +196,7 @@ class ChatBot {
             
             // Si es la primera vez que abre el chat, mostrar mensaje de bienvenida
             if (this.chatMessages.children.length === 1) { // Solo tiene el mensaje de bienvenida
-                this.addBotMessage('¡Hola! 👋 Soy tu asistente para gestionar horas. Puedes decirme cosas como:\n\n• "¿Qué horas tengo esta semana?"\n• "Pon 8h en Desarrollo hoy"\n• "3h en Reuniones y 5h en Desarrollo"');
+                this.addBotMessage('Bienvenido al asistente de gestión de horas. Puedes realizar operaciones como:\n\n• "¿Qué horas tengo esta semana?"\n• "Pon 8h en Desarrollo hoy"\n• "3h en Reuniones y 5h en Desarrollo"');
             }
         } else {
             this.chatContainer.classList.remove('open');
@@ -259,7 +259,7 @@ class ChatBot {
             this.hideTyping();
             
             // Mostrar respuesta del bot
-            this.addBotMessage(data.response || data.message || 'Algo salió mal. Inténtalo de nuevo.');
+            this.addBotMessage(data.response || data.message || 'Se produjo un error. Por favor, inténtalo de nuevo.');
             
             // Si el comando fue exitoso, refrescar la tabla
             if (data.success && this.isCommandoAccion(data.response)) {
@@ -275,7 +275,7 @@ class ChatBot {
         } catch (error) {
             console.error('❌ Error al enviar mensaje:', error);
             this.hideTyping();
-            this.addBotMessage('⚠️ No pude conectar con el servidor. Asegúrate de que el bot esté ejecutándose en http://localhost:8001');
+            this.addBotMessage('⚠️ No se pudo establecer conexión con el servidor. Verifica que el servicio esté activo.');
             this.updateStatus(false);
         }
     }

@@ -147,12 +147,12 @@ class ProjectManager {
         
         // Validaciones
         if (!data.nombre || data.nombre.trim().length === 0) {
-            this.showError('El nombre del proyecto es obligatorio');
+            this.showError('El nombre del proyecto es obligatorio.');
             return;
         }
         
         if (data.nombre.length > 100) {
-            this.showError('El nombre debe tener máximo 100 caracteres');
+            this.showError('El nombre no puede superar los 100 caracteres.');
             return;
         }
         
@@ -274,12 +274,12 @@ class ProjectManager {
                 }
             } else {
                 const result = await response.json();
-                alert(result.detail || 'Error al eliminar el proyecto');
+                alert(result.detail || 'Error al eliminar el proyecto.');
                 this.closeConfirmDeleteModal();
             }
         } catch (error) {
             console.error('❌ Error:', error);
-            alert('Error de conexión con el servidor');
+            alert('Error de conexión con el servidor.');
             this.closeConfirmDeleteModal();
         }
     }
@@ -345,8 +345,8 @@ class ProjectManager {
         if (this.projects.length === 0) {
             this.projectsListContainer.innerHTML = `
                 <div style="text-align: center; padding: 40px 20px; color: var(--gray-500);">
-                    <p style="font-size: 18px; margin-bottom: 10px;">📋 No tienes proyectos</p>
-                    <p style="font-size: 14px;">Crea tu primer proyecto para comenzar</p>
+                    <p style="font-size: 18px; margin-bottom: 10px;">📋 No hay proyectos registrados</p>
+                    <p style="font-size: 14px;">Crea un proyecto para comenzar</p>
                 </div>
             `;
             return;
